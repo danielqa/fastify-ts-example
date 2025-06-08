@@ -1,8 +1,10 @@
-import type {User} from "../domain/user.schema"
-import {usersRepository} from "../infra/user.repository"
+import type {User} from "../domain/users.entity"
+import type {UsersRepository} from "../domain/users.repository"
 
 export class ListUsersService {
+    constructor(private readonly usersRepository: UsersRepository) {}
+
     execute(): User[] {
-        return usersRepository.findAll()
+        return this.usersRepository.findAll()
     }
 }

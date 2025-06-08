@@ -1,10 +1,8 @@
-import {app} from './app'
+import {app} from "./core/app"
 
-const SERVER_PORT = 3333
-
-app.listen({port: SERVER_PORT})
-    .then(() => console.log(`Server running at http://localhost:${SERVER_PORT}`))
-    .catch(error => {
-        console.error('Error starting server:', error)
+app.listen({port: 3333}, (err) => {
+    if (err) {
+        app.log.error('Error starting server:', err)
         process.exit(1)
-    })
+    }
+})

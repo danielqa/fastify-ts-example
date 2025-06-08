@@ -11,10 +11,15 @@ import {fastifySwaggerUi} from "@fastify/swagger-ui"
 
 import {routes} from "./routes"
 
-export const app = fastify().withTypeProvider<ZodTypeProvider>()
+export const app = fastify({ logger: true }).withTypeProvider<ZodTypeProvider>()
 
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
+
+app.setErrorHandler((error, _, reply) => {
+    app.log.error(error)
+    reply.status(500).send({ message: 'Internal server error' })
+})
 
 // Enable CORS for development/testing purposes.
 // In production, the origin should be restricted for security reasons.

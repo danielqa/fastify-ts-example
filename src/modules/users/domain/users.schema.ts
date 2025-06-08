@@ -8,5 +8,4 @@ export const userSchema = z.object({
 
 export const createUserSchema = userSchema.omit({id: true})
 
-export type User = z.infer<typeof userSchema>
 export type CreateUserInput = z.infer<typeof createUserSchema>

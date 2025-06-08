@@ -1,17 +1,15 @@
 import { randomUUID } from 'node:crypto'
 
-import type {CreateUserInput, User} from "../domain/user.schema"
-import {usersRepository} from "../infra/user.repository"
+import {User} from "../domain/users.entity"
+import type {CreateUserInput} from "../domain/users.schema"
+import type {UsersRepository} from "../domain/users.repository"
 
 export class CreateUserService {
-    execute(data: CreateUserInput): User {
-        const user: User = {
-            id: randomUUID(),
-            name: data.name,
-            email: data.email,
-        }
+    constructor(private readonly usersRepository: UsersRepository) {}
 
-        usersRepository.save(user)
+    execute({name, email}: CreateUserInput): User {
+        const user = new User(randomUUID(), name, email)
+        this.usersRepository.save(user)
         return user
     }
 }
